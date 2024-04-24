@@ -15,5 +15,7 @@
   vars:
     ansible_become_pass: "{{ password }}"
   roles:
-    - add_user
-    - install_packages
+    - role: add_user
+    - role: install_packages
+      vars:
+        default_shell: fish

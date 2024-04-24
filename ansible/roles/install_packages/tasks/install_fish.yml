@@ -8,6 +8,7 @@
   user:
     name: "{{ ansible_user }}"
     shell: /usr/bin/fish
+  when: default_shell == 'fish'
 
 - name: Check if oh-my-fish is installed
   stat:
