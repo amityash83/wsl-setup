@@ -27,10 +27,15 @@ $ ansible-playbook ansible-ubuntu-wsl.yml --ask-become-pass
    ```
    chmod +x bootstrap_ansible.sh
    ```
-2. To run playbook, use following command
+2. To install Pre-Requisites to confure WSL, use following playbook
    ```
-   ansible-playbook -i localhost, playbook.yml
+   ansible-playbook -i localhost, setup_prerequisites.yml
    ```
-3. 
+3. To install and configure tools and application in WSL, use following playbook
+   ```
+   ansible-playbook -i localhost, setup_wsl.yml
+   ```
+
+
 
 
