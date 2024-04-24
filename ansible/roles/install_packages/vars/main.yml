@@ -1,0 +1,3 @@
+---
+omf_install_dir: "{{ ansible_env.HOME }}/.local/share/omf"
+# ansible_user: "amit"

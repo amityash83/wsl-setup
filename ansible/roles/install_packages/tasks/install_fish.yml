@@ -1,0 +1,43 @@
+---
+- name: Install fish shell
+  apt:
+    name: fish
+    state: present
+
+- name: Set fish as default shell
+  user:
+    name: "{{ ansible_user }}"
+    shell: /usr/bin/fish
+
+- name: Check if oh-my-fish is installed
+  stat:
+    path: "{{ ansible_env.HOME }}/.local/share/omf"
+  register: omf_installed
+
+- name: Clone oh-my-fish repo
+  git:
+    repo: 'https://github.com/oh-my-fish/oh-my-fish'
+    dest: '/tmp/omf'
+    clone: yes
+  when: not omf_installed.stat.exists
+
+- name: Install oh-my-fish
+  become: true
+  become_user: '{{ ansible_user }}'
+  command: /tmp/omf/bin/install -y --offline --noninteractive
+  when: not omf_installed.stat.exists
+
+- name: Configure fish
+  
+  template:
+    src: config.fish.j2
+    dest: '/home/{{ ansible_user }}/.config/fish/config.fish'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: 0644
+
+- name: Reloading SHELL ...
+  shell: exec $SHELL
+
+
+

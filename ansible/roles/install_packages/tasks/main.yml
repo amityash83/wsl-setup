@@ -1,0 +1,4 @@
+---
+- include_tasks: install_base_packages.yml
+- include_tasks: install_fish.yml
+ 

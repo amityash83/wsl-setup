@@ -1,0 +1,14 @@
+---
+- name: Add user "{{ ansible_user }}"
+  user:
+    name: "{{ ansible_user }}"
+    state: present
+    create_home: yes
+    group: sudo
+
+- name: Add "{{ ansible_user }}" to sudoers file without password
+  lineinfile:
+    path: /etc/sudoers
+    line: "{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL"
+    validate: 'visudo -cf %s'
+    insertafter: EOF
