@@ -1,0 +1,44 @@
+---
+# roles/install_packages/install_bash.yml
+- name: Install bash
+  apt:
+    name: bash
+    state: present
+
+- name: Install curl if not present
+  apt:
+    name: curl
+    state: present
+
+# - name: Install oh-my-bash
+#   become: yes
+#   become_user: '{{ ansible_user }}'
+#   shell: |
+#     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+#     ""
+#   register: oh_my_bash_install
+#   changed_when: oh_my_bash_install.stdout.find("Oh-my-bash installation successful!") != -1
+#   when: default_shell == 'bash'
+
+- name: Download ohmybash installable scripts (non-root)
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "/home/{{ ansible_user }}/{{ item.dest }}"
+    mode: "0744"
+  loop:
+    - {url: 'https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh', dest: 'ohmybash-install.sh'}
+
+- name: Install OhMyBash
+  ansible.builtin.command:
+    cmd: "/home/{{ ansible_user }}/ohmybash-install.sh"
+    creates: "/home/{{ ansible_user }}/.oh-my-bash"
+
+- name: Set bash as default shell
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/bash
+  when: default_shell == 'bash'
+
+- name: Reloading SHELL ...
+  shell: exec $SHELL
+  when: default_shell == 'bash'

@@ -18,4 +18,8 @@
     - role: add_user
     - role: install_packages
       vars:
-        default_shell: fish
+        default_shell: "fish"
+
+  # tasks:
+  #   - name: Reloading SHELL ...
+  #     shell: exec $SHELL

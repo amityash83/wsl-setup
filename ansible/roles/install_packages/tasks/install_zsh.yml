@@ -1,0 +1,16 @@
+---
+# roles/install_packages/install_zsh.yml
+- name: Install zsh
+  apt:
+    name: zsh
+    state: present
+
+- name: Set zsh as default shell
+  user:
+    name: "{{ ansible_user }}"
+    shell: /usr/bin/zsh
+  when: default_shell == 'zsh'
+
+- name: Reloading SHELL ...
+  shell: exec $SHELL
+  when: default_shell == 'zsh'

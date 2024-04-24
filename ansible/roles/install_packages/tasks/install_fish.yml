@@ -4,6 +4,11 @@
     name: fish
     state: present
 
+- name: Install exa for oh-my-fish custom configuration
+  apt:
+    name: exa
+    state: present
+
 - name: Set fish as default shell
   user:
     name: "{{ ansible_user }}"
@@ -29,7 +34,6 @@
   when: not omf_installed.stat.exists
 
 - name: Configure fish
-  
   template:
     src: config.fish.j2
     dest: '/home/{{ ansible_user }}/.config/fish/config.fish'
@@ -39,6 +43,7 @@
 
 - name: Reloading SHELL ...
   shell: exec $SHELL
+  when: default_shell == 'fish'
 
 
 
