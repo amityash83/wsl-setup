@@ -1,5 +1,5 @@
 # Ansible to setup Windows 10 WSL environment
-Ansibe role to setup WSL environment on my Windows 10 Machine (Laptop/Desktop)
+Ansibe role to setup WSL environment on my Windows Machine (Laptop/Desktop)
 
 ## Requirement
 * Git
