@@ -1,0 +1,4 @@
+---
+- include: install_python.yml
+- include: default_pyenv_version.yml
+- include: uninstall_python.yml

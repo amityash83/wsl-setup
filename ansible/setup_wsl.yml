@@ -1,0 +1,23 @@
+---
+- name: Setup WSL Environment
+  hosts: localhost
+  connection: local  # Use local connection
+  pre_tasks: 
+    - include_vars: group_vars/all.yaml
+  # become: yes
+  # vars_prompt:
+  #   - name: username
+  #     prompt: "Enter username:"
+  #     private: no
+  #   - name: password
+  #     prompt: "Enter password:"
+  #     private: yes
+  # vars:
+  #   ansible_become_pass: "{{ password }}"
+
+  roles:
+    # - install_packages
+    - pyenv
+    - python
+
+

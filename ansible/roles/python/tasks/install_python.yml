@@ -1,0 +1,29 @@
+---
+- name: Get list of installed Python versions
+  shell: pyenv versions --bare
+  register: pyenv_versions_output
+
+- name: Debug pyenv versions output
+  debug:
+    var: pyenv_versions_output.stdout
+
+- name: Set fact for list of installed Python versions
+  set_fact:
+    pyenv_installed_versions: "{{ pyenv_versions_output.stdout.split('\n') }}"
+
+- name: Debug pyenv installed versions
+  debug:
+    var: pyenv_installed_versions
+
+- name: Install Python versions
+  command: pyenv install {{ item }}
+  # loop: "{{ python_versions | intersect(pyenv_installed_versions) }}"
+  loop: "{{ python_versions | difference(pyenv_installed_versions) }}"
+  register: pyenv_install
+  when: item not in pyenv_installed_versions
+  ignore_errors: yes
+
+- name: Debug installed Python versions
+  debug:
+    var: pyenv_install.results
+

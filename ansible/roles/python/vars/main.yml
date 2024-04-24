@@ -1,0 +1,15 @@
+---
+python_versions:
+  - "3.10.12"
+  - "3.10.11"
+  - "3.10.10"
+  # - "3.11.0"
+  # - "3.12.0"
+  # Add more version as needed
+
+default_python_version: "3.10.11"
+
+pyenv_root: "/home/{{ ansible_user }}/.pyenv"
+pyenv_versions_list: "{{ lookup('pipe', 'pyenv versions --bare') | split('\n') }}"
+ansible_user: amit
+

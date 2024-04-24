@@ -1,0 +1,10 @@
+---
+- name: Install pyenv dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - git
+    - curl
+    - make
+    - build-essential

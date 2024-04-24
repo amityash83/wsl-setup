@@ -1,0 +1,15 @@
+---
+- name: Debug installed versions and version to be uninstalled
+  debug:
+    msg: "Installed versions: {{ pyenv_installed_versions }}, Version to be uninstalled: {{ item }}"
+  loop: "{{ pyenv_installed_versions | difference(python_versions) }}"
+
+- name: Uninstall Python versions not in list
+  command: pyenv uninstall --force {{ item }}
+  loop: "{{ pyenv_installed_versions | difference(python_versions) }}"
+  register: pyenv_uninstall
+  ignore_errors: yes
+
+- name: Debug uninstalled Python versions
+  debug:
+    var: pyenv_uninstall.results

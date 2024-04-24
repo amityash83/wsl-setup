@@ -1,0 +1,27 @@
+---
+- name: Clone pyenv from GitHub
+  git:
+    repo: "https://github.com/pyenv/pyenv.git"
+    dest: "{{ pyenv_root }}"
+    version: "{{ pyenv_version }}"
+    clone: yes
+    force: yes
+    update: yes
+    # accept_hostkey: yes
+    # ssl_verify: no
+  environment:
+    GIT_SSL_NO_VERIFY: "true"
+
+- name: Add pyenv to PATH
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'export PATH="$HOME/.pyenv/bin:$PATH"'
+    insertafter: EOF
+  when: ansible_user == ansible_user
+
+- name: Add pyenv init to shell
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'eval "$(pyenv init --path)"'
+    insertafter: EOF
+  when: ansible_user == ansible_user

@@ -1,0 +1,5 @@
+---
+- name: Set default Python version
+  command: pyenv global {{ default_python_version }}
+  environment:
+    PATH: "{{ pyenv_root }}/bin:{{ ansible_env.PATH }}"
