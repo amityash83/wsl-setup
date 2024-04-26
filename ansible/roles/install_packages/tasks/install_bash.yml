@@ -10,6 +10,16 @@
     name: curl
     state: present
 
+- name: Set bash as default shell
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/bash
+  when: default_shell == 'bash'
+
+- name: Reloading SHELL ...
+  shell: exec $SHELL
+  when: default_shell == 'bash'
+
 # - name: Install oh-my-bash
 #   become: yes
 #   become_user: '{{ ansible_user }}'
@@ -37,12 +47,3 @@
     cmd: "/home/{{ ansible_user }}/ohmybash-install.sh"
     creates: "/home/{{ ansible_user }}/.oh-my-bash"
 
-- name: Set bash as default shell
-  user:
-    name: "{{ ansible_user }}"
-    shell: /bin/bash
-  when: default_shell == 'bash'
-
-- name: Reloading SHELL ...
-  shell: exec $SHELL
-  when: default_shell == 'bash'
