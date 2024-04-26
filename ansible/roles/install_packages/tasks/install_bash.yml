@@ -21,6 +21,8 @@
 #   when: default_shell == 'bash'
 
 - name: Download ohmybash installable scripts (non-root)
+  become: true
+  become_user: '{{ ansible_user }}'
   ansible.builtin.get_url:
     url: "{{ item.url }}"
     dest: "/home/{{ ansible_user }}/{{ item.dest }}"
@@ -29,6 +31,8 @@
     - {url: 'https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh', dest: 'ohmybash-install.sh'}
 
 - name: Install OhMyBash
+  become: true
+  become_user: '{{ ansible_user }}'
   ansible.builtin.command:
     cmd: "/home/{{ ansible_user }}/ohmybash-install.sh"
     creates: "/home/{{ ansible_user }}/.oh-my-bash"
