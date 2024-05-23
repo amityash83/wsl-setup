@@ -24,5 +24,6 @@ packages_list:
   - git
   - tree
   - vim
+  - podman
 
 ansible_user: "amit"
